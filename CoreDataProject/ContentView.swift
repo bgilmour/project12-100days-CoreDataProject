@@ -12,16 +12,41 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var moc
 
     var body: some View {
-        StudentView()
+        WizardTestView()
     }
 
+}
+
+struct WizardTestView: View {
+    @Environment(\.managedObjectContext) private var moc
+
+    @FetchRequest(entity: Wizard.entity(), sortDescriptors: []) var wizards: FetchedResults<Wizard>
+
+    var body: some View {
+        List(wizards, id: \.self) { wizard in
+            Text(wizard.name ?? "Unknown")
+        }
+
+        Button("Add") {
+            let wizard = Wizard(context: moc)
+            wizard.name = "Harry Potter"
+        }
+
+        Button("Save") {
+            do {
+                try moc.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 struct Student: Hashable {
     let name: String
 }
 
-struct StudentView: View {
+struct StudentTestView: View {
     let students = [Student(name: "Harry Potter"), Student(name: "Hermione Granger")]
 
     var body: some View {
@@ -33,7 +58,7 @@ struct StudentView: View {
     }
 }
 
-struct ListForEachView: View {
+struct ListForEachTestView: View {
     var body: some View {
         List {
             ForEach([2, 4, 6, 8, 10], id: \.self) {
