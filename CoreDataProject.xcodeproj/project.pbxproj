@@ -13,6 +13,8 @@
 		3E9A712826AADBDB007263BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E9A712726AADBDB007263BA /* Preview Assets.xcassets */; };
 		3E9A712A26AADBDB007263BA /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A712926AADBDB007263BA /* Persistence.swift */; };
 		3E9A712D26AADBDB007263BA /* CoreDataProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A712B26AADBDB007263BA /* CoreDataProject.xcdatamodeld */; };
+		3E9A713D26AAE1A7007263BA /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A713B26AAE1A7007263BA /* Movie+CoreDataClass.swift */; };
+		3E9A713E26AAE1A7007263BA /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A713C26AAE1A7007263BA /* Movie+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		3E9A712926AADBDB007263BA /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		3E9A712C26AADBDB007263BA /* CoreDataProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataProject.xcdatamodel; sourceTree = "<group>"; };
 		3E9A712E26AADBDB007263BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E9A713B26AAE1A7007263BA /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E9A713C26AAE1A7007263BA /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 		3E9A711F26AADBD7007263BA /* CoreDataProject */ = {
 			isa = PBXGroup;
 			children = (
+				3E9A714026AAE3BD007263BA /* DataModel */,
 				3E9A712026AADBD7007263BA /* CoreDataProjectApp.swift */,
 				3E9A712226AADBD7007263BA /* ContentView.swift */,
 				3E9A712426AADBDB007263BA /* Assets.xcassets */,
@@ -73,6 +78,15 @@
 				3E9A712726AADBDB007263BA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3E9A714026AAE3BD007263BA /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				3E9A713B26AAE1A7007263BA /* Movie+CoreDataClass.swift */,
+				3E9A713C26AAE1A7007263BA /* Movie+CoreDataProperties.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +161,8 @@
 				3E9A712A26AADBDB007263BA /* Persistence.swift in Sources */,
 				3E9A712326AADBD7007263BA /* ContentView.swift in Sources */,
 				3E9A712D26AADBDB007263BA /* CoreDataProject.xcdatamodeld in Sources */,
+				3E9A713D26AAE1A7007263BA /* Movie+CoreDataClass.swift in Sources */,
+				3E9A713E26AAE1A7007263BA /* Movie+CoreDataProperties.swift in Sources */,
 				3E9A712126AADBD7007263BA /* CoreDataProjectApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
