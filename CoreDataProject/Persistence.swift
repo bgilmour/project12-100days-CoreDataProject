@@ -34,6 +34,6 @@ struct PersistenceController {
             }
         })
 
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        // container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }
