@@ -13,11 +13,19 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
     var results: FetchedResults<T> { fetchRequest.wrappedValue }
     let content: (T) -> Content
 
-    init(filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
+    init(
+        filterKey: String,
+        filterValue: String,
+        predicate: PredicateOp,
+        negate: Bool = false,
+        caseSensitive: Bool = true,
+        sortDescriptors: [NSSortDescriptor] = [],
+        @ViewBuilder content: @escaping (T) -> Content) {
+        
         fetchRequest = FetchRequest<T>(
             entity: T.entity(),
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "%K beginswith %@", filterKey, filterValue)
+            sortDescriptors: sortDescriptors,
+            predicate: NSPredicate(format: "\(negate ? "not " : "")%K \(predicate.rawValue)\(caseSensitive ? "" : "[c]") %@", filterKey, filterValue)
         )
         self.content = content
     }
@@ -27,4 +35,15 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
             content(result)
         }
     }
+}
+
+enum PredicateOp: String, CaseIterable {
+    case equals = "=="
+    case lessThan = "<"
+    case lessThanEquals = "<="
+    case greaterThan = ">"
+    case greaterThanEquals = ">="
+    case contains
+    case beginsWith
+    case endsWith
 }

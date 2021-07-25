@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
 
     var body: some View {
-        CountryCandyTestView()
+        SingerTestView()
     }
 
 }
@@ -67,37 +67,73 @@ struct CountryCandyTestView: View {
 struct SingerTestView: View {
     @Environment(\.managedObjectContext) private var moc
 
-    @State private var lastNameFilter = "A"
+    @State private var filterValue = "A"
+    @State private var predicate = PredicateOp.beginsWith
+    @State private var negate = false
+    @State private var caseSensitive = true
+    @State private var useLastName = true
+    @State private var ascending = true
+
+    var sortKeys = ["firstName", "lastName"]
 
     var body: some View {
-        VStack {
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer) in
-                Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
+        NavigationView {
+            Form {
+                Section(header: Text("Results")) {
+                    FilteredList(
+                        filterKey: useLastName ? "lastName" : "firstName",
+                        filterValue: filterValue,
+                        predicate: predicate,
+                        negate: negate,
+                        caseSensitive: caseSensitive,
+                        sortDescriptors: [
+                            NSSortDescriptor(keyPath: useLastName ? \Singer.lastName : \Singer.firstName, ascending: ascending)
+                        ]
+                    ) { (singer: Singer) in
+                        Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
+                    }
+                }
+
+                Section(header: Text("Key")) {
+                    Toggle("Use lastName as key", isOn: $useLastName)
+                }
+
+                Section(header: Text("Predicate")) {
+                    TextField("Filter", text: $filterValue)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                    Picker("Predicate", selection: $predicate) {
+                        ForEach(PredicateOp.allCases, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                    Toggle("Negate", isOn: $negate)
+                    Toggle("Case sensitive", isOn: $caseSensitive)
+                }
+
+                Section(header: Text("Sorting")) {
+                    Toggle("Ascending", isOn: $ascending)
+                }
+
+                Section(header: Text("Initialise")) {
+                    Button("Add Examples") {
+                        let taylor = Singer(context: moc)
+                        taylor.firstName = "Taylor"
+                        taylor.lastName = "Swift"
+
+                        let ed = Singer(context: moc)
+                        ed.firstName = "Ed"
+                        ed.lastName = "Sheeran"
+
+                        let adele = Singer(context: moc)
+                        adele.firstName = "Adele"
+                        adele.lastName = "Adkins"
+
+                        try? moc.save()
+                    }
+                }
             }
-
-            Button("Add Examples") {
-                let taylor = Singer(context: moc)
-                taylor.firstName = "Taylor"
-                taylor.lastName = "Swift"
-
-                let ed = Singer(context: moc)
-                ed.firstName = "Ed"
-                ed.lastName = "Sheeran"
-
-                let adele = Singer(context: moc)
-                adele.firstName = "Adele"
-                adele.lastName = "Adkins"
-
-                try? moc.save()
-            }
-
-            Button("Show A") {
-                lastNameFilter = "A"
-            }
-
-            Button("Show S") {
-                lastNameFilter = "S"
-            }
+            .navigationBarTitle("FilteredList")
         }
     }
 }
