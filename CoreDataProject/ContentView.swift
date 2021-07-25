@@ -16,6 +16,82 @@ struct ContentView: View {
 
 }
 
+struct ArrayOfViews: View {
+    @State private var views = [AnyView]()
+
+    var body: some View {
+        VStack {
+            Button("Add Shape") {
+                if Bool.random() {
+                    views.append(AnyView(Circle().frame(height: 50)))
+                } else {
+                    views.append(AnyView(Rectangle().frame(width: 50)))
+                }
+            }
+
+            ForEach(0 ..< views.count, id: \.self) {
+                views[$0]
+            }
+
+            Spacer()
+        }
+    }
+}
+
+extension View {
+    func erasedToAnyView() -> AnyView {
+        AnyView(self)
+    }
+}
+
+struct UsingAnyView: View {
+    @State private var view = AnyView(EmptyView())
+
+    var body: some View {
+        VStack {
+            Button("Random View") {
+                if Bool.random() {
+                    view = Text("Hello, world!")
+                        .frame(width: 300)
+                        .background(Color.red)
+                        .erasedToAnyView()
+                } else {
+                    view = Text("Hello, world!")
+                        .background(Color.red)
+                        .erasedToAnyView()
+                }
+            }
+            .padding()
+
+            view
+        }
+    }
+}
+
+struct UsingGroup: View {
+    @State private var randomChoice = Bool.random()
+
+    var body: some View {
+        VStack {
+            Button("Random View") {
+                randomChoice = Bool.random()
+            }
+            .padding()
+
+            Group {
+                if randomChoice {
+                    Text("Hello, world!")
+                        .frame(width: 300)
+                        .background(Color.red)
+                } else {
+                    Text("Hello, world!")
+                        .background(Color.red)
+                }
+            }
+        }
+    }
+}
+
 struct CountryCandyTestView: View {
     @Environment(\.managedObjectContext) private var moc
 
